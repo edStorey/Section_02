@@ -1,20 +1,22 @@
 #include <iostream>
 #include <string>
+#include "FBullCowGame.h"
 
-using namespace std;
+//using namespace std;
 
 void PrintIntro(int);
 void PlayGame();
-string GetGuess();
+std::string GetGuess();
 bool AskToPlayAgain();
+FBullCowGame BCGame;
 
-string PrintBack(std::string &Guess);
+std::string PrintBack(std::string &Guess);
 
 int main()
 {
 	//Introduce the game
 	constexpr int WORD_LENGTH = 5;
-	
+
 	PrintIntro(WORD_LENGTH);
 	PlayGame();
 	return 0;
@@ -23,51 +25,57 @@ int main()
 
 void PlayGame()
 {
+
+	BCGame.Reset();
 	do {
-		constexpr int NUMBER_OF_TURNS = 5;
-		for (int i = 0; i < NUMBER_OF_TURNS; i++)
+		int MaxTries = BCGame.GetMaxTries();
+		// TODO Change this to while loop
+		for (int i = 0; i < MaxTries; i++)
 		{
-			string Guess = GetGuess();
+			std::string Guess = GetGuess(); // TODO Make loop checking valid
 			PrintBack(Guess);
 		}
-		cout << endl;
+		std::cout << std::endl;
 	} while (AskToPlayAgain());
+
+	// TODO Summarise Game
 }
 	
 
 // Print introduction text to console
 void PrintIntro(int wordLength)
 {
-	cout << "Welcome to Bulls and Cows, a fun word game.\n";
-	cout << "Can you guess the " << wordLength << " letter isogram I'm thinking of?\n";
-	cout << endl;
+	std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
+	std::cout << "Can you guess the " << wordLength << " letter isogram I'm thinking of?\n";
+	std::cout << std::endl;
 	return;
 }
 
-string GetGuess()
+std::string GetGuess()
 {
 	// get a guess from the player
-	string Guess = "";
-	cout << "Enter your guess: ";
-	getline(cin, Guess);
+	std::string Guess = "";
+	std::cout << "Enter your guess: ";
+	getline(std::cin, Guess);
+	//std::cout << "GetCurrentTry: " << BCGame.GetCurrentTry();
 	return Guess;
 	
 }
 
-string PrintBack(string &Guess)
+std::string PrintBack(std::string &Guess)
 {
 	// repeat the guess back to them
-	cout << "Your guess was " << Guess << endl;
-	cout << endl;
+	std::cout << "Your guess was " << Guess << std::endl;
+	std::cout << std::endl;
 	return Guess;
 }
 
 bool AskToPlayAgain()
 {
-	cout << "Do you want to play again? (y/n)";
-	cout << endl;
-	string Response = "";
-	getline(cin, Response);
+	std::cout << "Do you want to play again? (y/n)";
+	std::cout << std::endl;
+	std::string Response = "";
+	getline(std::cin, Response);
 
 
 	return (Response[0] == 'y' || Response[0] == 'Y');
