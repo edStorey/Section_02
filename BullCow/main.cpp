@@ -1,21 +1,28 @@
+/*This is the console executable, that makes use of the BullCow class
+This acts as the view in a MVCpattren is responsible for all user 
+interaction. For game logic see the FBullCosGame class
+*/
+
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
+using FText = std::string;
+using int32 = int;
 
 //using namespace std;
 
-void PrintIntro(int);
+void PrintIntro(int32);
 void PlayGame();
-std::string GetGuess();
+FText GetGuess();
 bool AskToPlayAgain();
 FBullCowGame BCGame;
 
-std::string PrintBack(std::string &Guess);
+FText PrintBack(FText &Guess);
 
 int main()
 {
 	//Introduce the game
-	constexpr int WORD_LENGTH = 5;
+	constexpr int32 WORD_LENGTH = 5;
 
 	PrintIntro(WORD_LENGTH);
 	PlayGame();
@@ -28,11 +35,12 @@ void PlayGame()
 
 	BCGame.Reset();
 	do {
-		int MaxTries = BCGame.GetMaxTries();
+		int32 MaxTries = BCGame.GetMaxTries();
 		// TODO Change this to while loop
-		for (int i = 0; i < MaxTries; i++)
+		for (int32 i = 0; i < MaxTries; i++)
 		{
-			std::string Guess = GetGuess(); // TODO Make loop checking valid
+			std::cout << "Try " << BCGame.GetCurrentTry() << ". ";
+			FText Guess = GetGuess(); // TODO Make loop checking valid
 			PrintBack(Guess);
 		}
 		std::cout << std::endl;
@@ -43,7 +51,7 @@ void PlayGame()
 	
 
 // Print introduction text to console
-void PrintIntro(int wordLength)
+void PrintIntro(int32 wordLength)
 {
 	std::cout << "Welcome to Bulls and Cows, a fun word game.\n";
 	std::cout << "Can you guess the " << wordLength << " letter isogram I'm thinking of?\n";
@@ -51,10 +59,10 @@ void PrintIntro(int wordLength)
 	return;
 }
 
-std::string GetGuess()
+FText GetGuess()
 {
 	// get a guess from the player
-	std::string Guess = "";
+	FText Guess = "";
 	std::cout << "Enter your guess: ";
 	getline(std::cin, Guess);
 	//std::cout << "GetCurrentTry: " << BCGame.GetCurrentTry();
@@ -62,7 +70,7 @@ std::string GetGuess()
 	
 }
 
-std::string PrintBack(std::string &Guess)
+FText PrintBack(FText &Guess)
 {
 	// repeat the guess back to them
 	std::cout << "Your guess was " << Guess << std::endl;
@@ -74,7 +82,7 @@ bool AskToPlayAgain()
 {
 	std::cout << "Do you want to play again? (y/n)";
 	std::cout << std::endl;
-	std::string Response = "";
+	FText Response = "";
 	getline(std::cin, Response);
 
 
